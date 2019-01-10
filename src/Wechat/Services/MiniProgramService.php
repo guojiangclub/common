@@ -100,6 +100,23 @@ class MiniProgramService
     }
 
 
+    public function decryptData($appid,$session_key,$iv,$encryptData,$uuid = ''){
+
+        $platform = new PlatformService($appid, $uuid);
+
+        $data['session'] = $session_key;
+
+        $data['iv'] = $iv;
+
+        $data['encryptData'] = $encryptData;
+
+        $url = $platform->getUrl($appid, 'api/mini/decrypted');
+
+        return $platform->wxCurl($url, $data);
+
+    }
+
+
     public function getToken($appid, $forceRefresh = false, $uuid = '')
     {
 
