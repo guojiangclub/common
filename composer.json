@@ -1,0 +1,42 @@
+{
+  "name": "ibrand/common",
+  "type": "library",
+  "description": "iBrand common server.",
+  "keywords": [
+    "iBrand",
+    "common",
+    "server"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "shjchen",
+      "email": "ibrand.shjchen@foxmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0",
+    "orchestra/testbench": "~3.5",
+    "orchestra/database": "~3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "iBrand\\Common\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
