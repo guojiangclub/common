@@ -37,11 +37,11 @@ class MiniProgramService
             $savePath = $uuid . '/' . $savePath;
         }
 
-        if (Storage::disk($storage)->exists($savePath)) {
+        // if (Storage::disk($storage)->exists($savePath)) {
 
-            return Storage::disk($storage)->url($savePath);
+        //     return Storage::disk($storage)->url($savePath);
 
-        }
+        // }
         $data = [
             'scene' => $scene,
             'optional' => [
