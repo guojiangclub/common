@@ -19,7 +19,7 @@ class WechatServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/config.php' => config_path('ibrand/wechat_platform.php'),
+                __DIR__.'/../../config/wechat.php' => config_path('ibrand/wechat.php'),
             ]);
         }
     }

@@ -34,7 +34,11 @@
   "extra": {
     "laravel": {
       "providers": [
-      ]
+        "iBrand\\Common\\CommonServiceProvider"
+      ],
+      "aliases": {
+        "iBrandWechat": "iBrand\\Common\\Wechat\\Facades\\Wechat"
+      }
     }
   },
   "minimum-stability": "dev",
