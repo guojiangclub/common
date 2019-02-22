@@ -11,6 +11,7 @@
 
 namespace iBrand\Common\Wechat;
 
+use iBrand\Common\Wechat\Middleware\OAuthAuthenticate;
 use Illuminate\Support\ServiceProvider;
 
 class WechatServiceProvider extends ServiceProvider
@@ -22,5 +23,10 @@ class WechatServiceProvider extends ServiceProvider
                 __DIR__.'/../../config/wechat.php' => config_path('ibrand/wechat.php'),
             ]);
         }
+    }
+
+    public function register()
+    {
+        app('router')->aliasMiddleware('wechat.oauth', OAuthAuthenticate::class);
     }
 }
