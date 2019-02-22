@@ -13,11 +13,13 @@ namespace iBrand\Common;
 
 use iBrand\Common\Wechat\WechatServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use iBrand\Common\Platform\ServiceProvider as PlatformServiceProvider;
 
 class CommonServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->app->register(WechatServiceProvider::class);
+        $this->app->register(PlatformServiceProvider::class);
     }
 }

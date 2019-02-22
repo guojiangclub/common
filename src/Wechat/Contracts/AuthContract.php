@@ -5,9 +5,9 @@ namespace iBrand\Common\Wechat\Contracts;
 interface AuthContract
 {
     /**
-     * get openid.
      * @param string $url
+     * @param string $name
      * @return mixed
      */
-    public function getOpenid(string $url = '');
+    public function createOauthUrl(string $url = '', string $name = 'default');
 }

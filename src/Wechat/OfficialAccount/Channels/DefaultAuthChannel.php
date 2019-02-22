@@ -3,22 +3,24 @@
 namespace iBrand\Common\Wechat\OfficialAccount\Channels;
 
 use iBrand\Common\Wechat\Contracts\AuthContract;
+use iBrand\Common\Wechat\Factory;
 
 class DefaultAuthChannel implements AuthContract
 {
     /**
-     * get openid.
      * @param string $url
-     * @return mixed
+     * @param string $name
+     * @return mixed|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function getOpenid(string $url = '')
+    public function createOauthUrl(string $url = '', string $name = 'default')
     {
-        $config = [
+        $app = Factory::officialAccount($name);
 
-            'oauth' => [
-                'scopes'   => ['snsapi_base'],
-                'callback' => '/oauth_callback',
-            ],
-        ];
+        return $app->oauth->scopes(['snsapi_base'])->setRedirectUrl($url)
+            ->redirect();
+    }
+
+    public function getOpenid(){
+
     }
 }

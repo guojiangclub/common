@@ -15,7 +15,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "overtrue/http": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~6.0",
@@ -25,7 +26,10 @@
   "autoload": {
     "psr-4": {
       "iBrand\\Common\\": "src/"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
@@ -37,7 +41,6 @@
         "iBrand\\Common\\CommonServiceProvider"
       ],
       "aliases": {
-        "iBrandWechat": "iBrand\\Common\\Wechat\\Facades\\Wechat"
       }
     }
   },
