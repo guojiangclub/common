@@ -19,11 +19,11 @@ class Factory
 {
     /**
      * @param string $name
-     * @param array $config
+     * @param $config
      *
      * @return \EasyWeChat\Kernel\ServiceContainer
      */
-    public static function make($name, array $config)
+    public static function make($name, $config)
     {
         if (is_string($config)) {
             $snakeName = strtolower(Str::snake($name));
@@ -48,13 +48,13 @@ class Factory
         return $app;
     }
 
+
     /**
      * Dynamically pass methods to the application.
      *
-     * @param string $name
-     * @param array $arguments
-     *
-     * @return mixed
+     * @param $name
+     * @param $arguments
+     * @return \EasyWeChat\Kernel\ServiceContainer
      */
     public static function __callStatic($name, $arguments)
     {
