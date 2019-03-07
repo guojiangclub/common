@@ -4,6 +4,7 @@
 namespace iBrand\Common\Platform;
 
 use Overtrue\Http\Client as HttpClient;
+use Storage;
 
 class Client
 {
@@ -44,17 +45,58 @@ class Client
         return $this->request('api/oauth/user', $params);
     }
 
-    protected function request($url, $params = [], $method = 'GET')
+    /**
+     * @param $appid
+     * @param $page
+     * @param $width
+     * @param $scene
+     * @param string $type
+     * @param string $storage
+     * @param $uuid
+     * @return bool
+     */
+    public function createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid)
+    {
+
+        $img_name = $scene . '_' . $type . '_' . $appid . '_mini_qrcode.jpg';
+
+        $savePath = $type . '/mini/qrcode/' . $img_name;
+
+        if (!empty($uuid)) {
+
+            $savePath = $uuid . '/' . $savePath;
+        }
+        $params = [
+                'scene' => $scene,
+                'optional' => [
+                    'page' => $page,
+                    'width' => $width
+                ],
+        ];
+
+       $new['json']=$params;
+
+       $body=$this->request("api/mini/app_code/getUnlimit?appid=$appid&uuid=$uuid",$new,'POST',true);
+
+       Storage::disk($storage)->put($savePath, $body->getBody());
+
+       $result = Storage::disk($storage)->url($savePath);
+
+       return $result;
+
+    }
+
+    protected function request($url, $params = [], $method = 'GET',$returnRaw = false)
     {
         $headers = [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->getAccessToken()->getToken(),
+                'Authorization' => 'Bearer ' . $this->getAccessToken()->getToken()
             ]
         ];
 
         $params = array_merge($params, $headers);
 
-        return $this->getHttpClient()->request($url, $method, $params);
+        return $this->getHttpClient()->request($url, $method, $params,$returnRaw);
     }
 
     public function getHttpClient()
