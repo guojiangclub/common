@@ -22,9 +22,7 @@ class BaseResource extends Resource
 
     public static function collection($resource)
     {
-        return tap(new BaseResourceCollection($resource), function ($collection) {
-            $collection->collects = __CLASS__;
-        });
+        return new BaseResourceCollection($resource,get_called_class());
     }
 
     /**

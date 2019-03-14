@@ -22,6 +22,17 @@ class BaseResourceCollection extends ResourceCollection
     protected $withoutFields = [];
 
     /**
+     * BaseResourceCollection constructor.
+     * @param $resource
+     * @param $collects
+     */
+    public function __construct($resource, $collects)
+    {
+        $this->collects = $collects;
+        parent::__construct($resource);
+    }
+
+    /**
      * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request
@@ -50,7 +61,7 @@ class BaseResourceCollection extends ResourceCollection
      */
     protected function processCollection($request)
     {
-        return $this->collection->map(function (BaseResource $resource) use ($request) {
+        return $this->collection->map(function ($resource) use ($request) {
             return $resource->hide($this->withoutFields)->toArray($request);
         })->all();
     }
