@@ -86,6 +86,33 @@ class Client
 
     }
 
+
+    /**
+     *
+     * @param $appid
+     * @param $message
+     * @return array|object|\Overtrue\Http\Support\Collection|\Psr\Http\Message\ResponseInterface|string
+     */
+    public function sendTemplateMessage($appid,$message){
+//        $message=[
+//            'template_id' => 'template_id',
+//            'url' => 'http://baidu.com',
+//            'touser' =>'openid',
+//            'data' =>
+//               [ 'first' => ' 测试',
+//                   'keyword1' => ' 测试',
+//                   'keyword2' => ' 测试',
+//                   'keyword3' => ' 测试',
+//                   'keyword4' => ' 测试',
+//                   'remark' => '测试',]
+//
+//        ];
+      $data['json']=$message;
+
+      return $this->request("api/notice/send?appid=$appid",$data,'POST');
+
+    }
+
     protected function request($url, $params = [], $method = 'GET',$returnRaw = false)
     {
         $headers = [

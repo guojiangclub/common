@@ -8,6 +8,7 @@ namespace iBrand\Common\Platform;
  * @method Client            getOauthUrl($redirectUri,$appid)
  * @method Client            getUser($appid,$openid)
  * @method Client            createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid)
+ * @method Client            sendTemplateMessage($appid,$message)
  */
 class Application
 {
