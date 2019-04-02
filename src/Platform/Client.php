@@ -1,19 +1,36 @@
 <?php
 
-
 namespace iBrand\Common\Platform;
 
 use Overtrue\Http\Client as HttpClient;
 use Storage;
 
+/**
+ * Class Client
+ * @package iBrand\Common\Platform
+ */
 class Client
 {
+    /**
+     * @var
+     */
     protected $baseUri;
 
+    /**
+     * @var
+     */
     protected $accessToken;
 
+    /**
+     * @var
+     */
     protected $httpClient;
 
+    /**
+     * Client constructor.
+     * @param $baseUri
+     * @param $accessToken
+     */
     public function __construct($baseUri, $accessToken)
     {
         $this->accessToken = $accessToken;
@@ -45,6 +62,7 @@ class Client
         return $this->request('api/oauth/user', $params);
     }
 
+
     /**
      * @param $appid
      * @param $page
@@ -53,7 +71,7 @@ class Client
      * @param string $type
      * @param string $storage
      * @param $uuid
-     * @return bool
+     * @return mixed
      */
     public function createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid)
     {
@@ -67,22 +85,22 @@ class Client
             $savePath = $uuid . '/' . $savePath;
         }
         $params = [
-                'scene' => $scene,
-                'optional' => [
-                    'page' => $page,
-                    'width' => $width
-                ],
+            'scene' => $scene,
+            'optional' => [
+                'page' => $page,
+                'width' => $width
+            ],
         ];
 
-       $new['json']=$params;
+        $new['json'] = $params;
 
-       $body=$this->request("api/mini/app_code/getUnlimit?appid=$appid&uuid=$uuid",$new,'POST',true);
+        $body = $this->request("api/mini/app_code/getUnlimit?appid=$appid&uuid=$uuid", $new, 'POST', true);
 
-       Storage::disk($storage)->put($savePath, $body->getBody());
+        Storage::disk($storage)->put($savePath, $body->getBody());
 
-       $result = Storage::disk($storage)->url($savePath);
+        $result = Storage::disk($storage)->url($savePath);
 
-       return $result;
+        return $result;
 
     }
 
@@ -93,27 +111,36 @@ class Client
      * @param $message
      * @return array|object|\Overtrue\Http\Support\Collection|\Psr\Http\Message\ResponseInterface|string
      */
-    public function sendTemplateMessage($appid,$message){
-//        $message=[
-//            'template_id' => 'template_id',
-//            'url' => 'http://baidu.com',
-//            'touser' =>'openid',
-//            'data' =>
-//               [ 'first' => ' 测试',
-//                   'keyword1' => ' 测试',
-//                   'keyword2' => ' 测试',
-//                   'keyword3' => ' 测试',
-//                   'keyword4' => ' 测试',
-//                   'remark' => '测试',]
-//
-//        ];
-      $data['json']=$message;
+    public function sendTemplateMessage($appid, $message)
+    {
+        $data['json'] = $message;
 
-      return $this->request("api/notice/send?appid=$appid",$data,'POST');
+        return $this->request("api/notice/send?appid=$appid", $data, 'POST');
 
     }
 
-    protected function request($url, $params = [], $method = 'GET',$returnRaw = false)
+
+    /**
+     * get js config.
+     * @param $url
+     * @param $appid
+     * @return array|object|\Overtrue\Http\Support\Collection|\Psr\Http\Message\ResponseInterface|string
+     */
+    public function getJsConfig($url, $appid)
+    {
+        return $this->request("api/js/config?appid=" . $appid . "&url=" . $url);
+    }
+
+    /**
+     * @param $url
+     * @param array $params
+     * @param string $method
+     * @param bool $returnRaw
+     * @return array|object|\Overtrue\Http\Support\Collection|\Psr\Http\Message\ResponseInterface|string
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \iBrand\Common\Exceptions\Exception
+     */
+    protected function request($url, $params = [], $method = 'GET', $returnRaw = false)
     {
         $headers = [
             'headers' => [
@@ -123,9 +150,12 @@ class Client
 
         $params = array_merge($params, $headers);
 
-        return $this->getHttpClient()->request($url, $method, $params,$returnRaw);
+        return $this->getHttpClient()->request($url, $method, $params, $returnRaw);
     }
 
+    /**
+     * @return HttpClient
+     */
     public function getHttpClient()
     {
         $config = ['base_uri' => $this->baseUri];
@@ -134,11 +164,18 @@ class Client
         return $this->httpClient;
     }
 
+    /**
+     * @return AccessToken
+     */
     public function getAccessToken(): AccessToken
     {
         return $this->accessToken;
     }
 
+    /**
+     * @param $accessToken
+     * @return $this
+     */
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
