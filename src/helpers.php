@@ -63,3 +63,24 @@ if (!function_exists('is_username')) {
         return preg_match($regExp, $username) ? $username : false;
     }
 }
+
+if (!function_exists('api_prefix')) {
+
+    /**
+     * get api prefix
+     *
+     * @param string $prefix
+     * @param string $version
+     * @return string
+     */
+    function api_prefix($prefix = 'api', $version = '')
+    {
+        $version = $version ?? config('ibrand.app.api_version');
+
+        if ($version == 'v1') {
+            return $prefix;
+        }
+
+        return $prefix . '/' . $version;
+    }
+}
