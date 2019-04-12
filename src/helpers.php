@@ -84,3 +84,17 @@ if (!function_exists('api_prefix')) {
         return $prefix . '/' . $version;
     }
 }
+
+if (!function_exists('get_wechat_config')) {
+
+    /**
+     * get wechat config.
+     * @param string $app
+     * @param string $type
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    function get_wechat_config($app = 'default', $type = 'official_account')
+    {
+        return config('ibrand.wechat.' . $type . '.' . $app);
+    }
+}
