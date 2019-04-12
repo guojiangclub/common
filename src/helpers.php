@@ -75,7 +75,7 @@ if (!function_exists('api_prefix')) {
      */
     function api_prefix($prefix = 'api', $version = '')
     {
-        $version = $version ?? config('ibrand.app.api_version');
+        $version = empty($version) ? config('ibrand.app.api_version') : $version;
 
         if ($version == 'v1') {
             return $prefix;
