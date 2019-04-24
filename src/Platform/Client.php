@@ -78,7 +78,7 @@ class Client
 	 */
 	public function getFans($appid, $openid)
 	{
-		$params = ['query' => compact('appid', 'openid')];
+		$params = ['json' => compact('appid', 'openid')];
 
 		return $this->request('api/fans/get', $params, 'POST');
 	}
