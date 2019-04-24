@@ -62,6 +62,20 @@ class Client
         return $this->request('api/oauth/user', $params);
     }
 
+	/**
+	 * @param $appid
+	 * @param $openid
+	 *
+	 * @return array|object|\Overtrue\Http\Support\Collection|\Psr\Http\Message\ResponseInterface|string
+	 * @throws \iBrand\Common\Exceptions\Exception
+	 */
+    public function getFans($appid, $openid)
+    {
+	    $params = ['query' => compact('appid', 'openid')];
+
+	    return $this->request('api/fans/get', $params, 'POST');
+    }
+
 
     /**
      * @param $appid
