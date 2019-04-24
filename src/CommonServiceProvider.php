@@ -17,38 +17,38 @@ use iBrand\Common\Platform\ServiceProvider as PlatformServiceProvider;
 use Route;
 use Schema;
 
-
 class CommonServiceProvider extends ServiceProvider
 {
-    public function boot()
-    {
-        if (!$this->app->routesAreCached()) {
+	protected $defer = true;
 
-            Route::prefix(api_prefix())
-                ->middleware(['api', 'cors'])
-                ->get('wechat/jssdkconfig', [
-                    'uses' => '\iBrand\Common\Controllers\WechatController@getJsConfig',
-                    'as' => 'api.wechat.getJsConfig',
-                ]);
+	public function boot()
+	{
+		if (!$this->app->routesAreCached()) {
 
-        }
+			Route::prefix(api_prefix())
+				->middleware(['api', 'cors'])
+				->get('wechat/jssdkconfig', [
+					'uses' => '\iBrand\Common\Controllers\WechatController@getJsConfig',
+					'as'   => 'api.wechat.getJsConfig',
+				]);
+		}
 
-        $this->publishes([
-            __DIR__ . '/../config/app.php' => config_path('ibrand/app.php'),
-        ]);
+		$this->publishes([
+			__DIR__ . '/../config/app.php' => config_path('ibrand/app.php'),
+		]);
 
-        //set https default.
-        if (config('ibrand.app.secure')) {
-            \URL::forceScheme('https');
-        }
+		//set https default.
+		if (config('ibrand.app.secure')) {
+			\URL::forceScheme('https');
+		}
 
-        //set utm8bm4 for mysql database.
-        Schema::defaultStringLength(191);
-    }
+		//set utm8bm4 for mysql database.
+		Schema::defaultStringLength(191);
+	}
 
-    public function register()
-    {
-        $this->app->register(WechatServiceProvider::class);
-        $this->app->register(PlatformServiceProvider::class);
-    }
+	public function register()
+	{
+		$this->app->register(WechatServiceProvider::class);
+		$this->app->register(PlatformServiceProvider::class);
+	}
 }
