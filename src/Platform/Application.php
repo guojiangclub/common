@@ -33,4 +33,9 @@ class Application
 	{
 		return $this->client->$name(...$arguments);
 	}
+
+	public function provides()
+	{
+		return ['ibrand.platform',Application::class];
+	}
 }

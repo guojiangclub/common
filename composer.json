@@ -39,7 +39,9 @@
   "extra": {
     "laravel": {
       "providers": [
-        "iBrand\\Common\\CommonServiceProvider"
+        "iBrand\\Common\\CommonServiceProvider",
+        "iBrand\\Common\\Wechat\\WechatServiceProvider",
+        "iBrand\\Common\\Platform\\ServiceProvider"
       ],
       "aliases": {
       }

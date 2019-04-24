@@ -11,7 +11,6 @@
 
 namespace iBrand\Common;
 
-use iBrand\Common\Platform\Application;
 use iBrand\Common\Wechat\WechatServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use iBrand\Common\Platform\ServiceProvider as PlatformServiceProvider;
@@ -20,8 +19,6 @@ use Schema;
 
 class CommonServiceProvider extends ServiceProvider
 {
-	protected $defer = true;
-
 	public function boot()
 	{
 		if (!$this->app->routesAreCached()) {
@@ -45,16 +42,5 @@ class CommonServiceProvider extends ServiceProvider
 
 		//set utm8bm4 for mysql database.
 		Schema::defaultStringLength(191);
-	}
-
-	public function register()
-	{
-		$this->app->register(WechatServiceProvider::class);
-		$this->app->register(PlatformServiceProvider::class);
-	}
-
-	public function provides()
-	{
-		return ['ibrand.platform',Application::class];
 	}
 }
