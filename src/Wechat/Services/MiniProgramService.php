@@ -15,113 +15,111 @@ use Storage;
 
 class MiniProgramService
 {
-    /**
-     *生成小程序太阳码
-     * @param $appid
-     * @param $page
-     * @param $width
-     * @param $scene
-     * @param string $type
-     * @param string $storage 存在类型public,qiniu
-     * @param $uuid
-     * @return bool
-     */
-    public function createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid)
-    {
-        $img_name = $scene . '_' . $type . '_' . $appid . '_mini_qrcode.jpg';
+	/**
+	 *生成小程序太阳码
+	 *
+	 * @param        $appid
+	 * @param        $page
+	 * @param        $width
+	 * @param        $scene
+	 * @param string $type
+	 * @param string $storage 存在类型public,qiniu
+	 * @param        $uuid
+	 *
+	 * @return bool
+	 */
+	public function createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid = '')
+	{
+		$img_name = $scene . '_' . $type . '_' . $appid . '_mini_qrcode.jpg';
 
-        $savePath = $type . '/mini/qrcode/' . $img_name;
+		$savePath = $type . '/mini/qrcode/' . $img_name;
 
-        if (!empty($uuid)) {
+		if (!empty($uuid)) {
 
-            $savePath = $uuid . '/' . $savePath;
-        }
+			$savePath = $uuid . '/' . $savePath;
+		}
+		
+		$data = [
+			'scene'    => $scene,
+			'optional' => [
+				'page'  => $page,
+				'width' => $width,
+			],
+		];
 
-        // if (Storage::disk($storage)->exists($savePath)) {
+		$platform = new PlatformService($appid, $uuid);
 
-        //     return Storage::disk($storage)->url($savePath);
+		$url = $platform->getUrl($appid, 'api/mini/app_code/getUnlimit');
 
-        // }
-        $data = [
-            'scene' => $scene,
-            'optional' => [
-                'page' => $page,
-                'width' => $width
-            ],
-        ];
+		$body = $platform->wxCurl($url, $data, false);
 
-        $platform = new PlatformService($appid, $uuid);
+		if (str_contains($body, 'errcode')) {
 
-        $url = $platform->getUrl($appid, 'api/mini/app_code/getUnlimit');
+			return false;
+		}
 
-        $body = $platform->wxCurl($url, $data, false);
+		Storage::disk($storage)->put($savePath, $body);
 
-        if (str_contains($body, 'errcode')) {
+		$result = Storage::disk($storage)->url($savePath);
 
-            return false;
-        }
+		if ($result) {
+			return $result;
+		}
 
-        Storage::disk($storage)->put($savePath, $body);
+		return false;
+	}
 
-        $result = Storage::disk($storage)->url($savePath);
+	/**
+	 * 通过code获取Session
+	 *
+	 * @param        $appid
+	 * @param        $code
+	 * @param string $uuid
+	 *
+	 * @return array
+	 */
+	public function getSession($appid, $code, $uuid = '')
+	{
+		$platform = new PlatformService($appid, $uuid);
 
-        if ($result) {
-            return $result;
-        }
+		$data['code'] = $code;
 
-        return false;
-    }
+		$url = $platform->getUrl($appid, 'api/mini/base/session');
 
-    /**
-     * 通过code获取Session
-     * @param $appid
-     * @param $code
-     * @param string $uuid
-     * @return array
-     */
-    public function getSession($appid, $code, $uuid = '')
-    {
-        $platform = new PlatformService($appid, $uuid);
+		$res = $platform->wxCurl($url, $data, false);
 
-        $data['code'] = $code;
+		$res_arr = [];
 
-        $url = $platform->getUrl($appid, 'api/mini/base/session');
+		if (json_decode($res)) {
+			foreach (json_decode($res) as $key => $item) {
+				$res_arr[$key] = $item;
+			}
+		}
 
-        $res = $platform->wxCurl($url, $data, false);
+		return $res_arr;
+	}
 
-        $res_arr = [];
+	public function decryptData($appid, $session_key, $iv, $encryptData, $uuid = '')
+	{
 
-        if (json_decode($res)) {
-            foreach (json_decode($res) as $key => $item) {
-                $res_arr[$key] = $item;
-            }
-        }
-        return $res_arr;
-    }
+		$platform = new PlatformService($appid, $uuid);
 
+		$data['session'] = $session_key;
 
-    public function decryptData($appid,$session_key,$iv,$encryptData,$uuid = ''){
+		$data['iv'] = $iv;
 
-        $platform = new PlatformService($appid, $uuid);
+		$data['encryptData'] = $encryptData;
 
-        $data['session'] = $session_key;
+		$url = $platform->getUrl($appid, 'api/mini/decrypted');
 
-        $data['iv'] = $iv;
+		return $platform->wxCurl($url, $data);
+	}
 
-        $data['encryptData'] = $encryptData;
+	public function getToken($appid, $forceRefresh = false, $uuid = '')
+	{
 
-        $url = $platform->getUrl($appid, 'api/mini/decrypted');
+		$platform = new PlatformService($appid, $uuid);
 
-        return $platform->wxCurl($url, $data);
-
-    }
-
-
-    public function getToken($appid, $forceRefresh = false, $uuid = '')
-    {
-
-        $platform = new PlatformService($appid, $uuid);
-
-        return $platform->getToken($forceRefresh);
-    }
+		return $platform->getToken($forceRefresh);
+	}
 }
