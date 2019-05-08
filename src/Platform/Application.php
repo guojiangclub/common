@@ -7,7 +7,7 @@ namespace iBrand\Common\Platform;
  * @method Client            getOauthUrl($redirectUri, $appid)
  * @method Client            getUser($appid, $openid)
  * @method Client            getFans($appid, $openid)
- * @method Client            createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid)
+ * @method Client            createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid = '')
  * @method Client            sendTemplateMessage($appid, $message)
  * @method Client            getJsConfig($url, $appid)
  */
@@ -36,6 +36,6 @@ class Application
 
 	public function provides()
 	{
-		return ['ibrand.platform',Application::class];
+		return ['ibrand.platform', Application::class];
 	}
 }

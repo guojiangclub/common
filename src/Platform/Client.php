@@ -94,7 +94,7 @@ class Client
 	 *
 	 * @return mixed
 	 */
-	public function createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid)
+	public function createMiniQrcode($appid, $page, $width, $scene, $type = 'share', $storage = 'public', $uuid = '')
 	{
 
 		$img_name = $scene . '_' . $type . '_' . $appid . '_mini_qrcode.jpg';
