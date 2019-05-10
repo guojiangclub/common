@@ -22,7 +22,8 @@ class BaseResource extends Resource
 
     public static function collection($resource)
     {
-        return new BaseResourceCollection($resource,get_called_class());
+        $array = collect_to_array($resource);
+        return new BaseResourceCollection(collect($array),get_called_class());
     }
 
     /**
