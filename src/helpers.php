@@ -98,3 +98,20 @@ if (!function_exists('get_wechat_config')) {
         return config('ibrand.wechat.' . $type . '.' . $app);
     }
 }
+
+if (!function_exists('collect_to_array')) {
+
+
+    /**
+     * @param $collection
+     * @return array
+     */
+    function collect_to_array($collection)
+    {
+        $array = [];
+        foreach ($collection as $item) {
+            $array[] = $item;
+        }
+        return $array;
+    }
+}
