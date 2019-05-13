@@ -12,55 +12,59 @@
 namespace iBrand\Common\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Pagination\AbstractPaginator;
 
 class BaseResource extends Resource
 {
-    /**
-     * @var array
-     */
-    protected $withoutFields = [];
+	/**
+	 * @var array
+	 */
+	protected $withoutFields = [];
 
-    public static function collection($resource)
-    {
-        $array = collect_to_array($resource);
-        return new BaseResourceCollection(collect($array),get_called_class());
-    }
+	public static function collection($resource)
+	{
+		if (!$resource instanceof AbstractPaginator) {
+			$resource = collect(collect_to_array($resource));
+		}
 
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request
-     *
-     * @return array
-     */
-    public function toArray($request)
-    {
-        return $this->filterFields(parent::toArray($request));
-    }
+		return new BaseResourceCollection($resource, get_called_class());
+	}
 
-    /**
-     * Set the keys that are supposed to be filtered out.
-     *
-     * @param array $fields
-     *
-     * @return $this
-     */
-    public function hide(array $fields)
-    {
-        $this->withoutFields = $fields;
+	/**
+	 * Transform the resource into an array.
+	 *
+	 * @param  \Illuminate\Http\Request
+	 *
+	 * @return array
+	 */
+	public function toArray($request)
+	{
+		return $this->filterFields(parent::toArray($request));
+	}
 
-        return $this;
-    }
+	/**
+	 * Set the keys that are supposed to be filtered out.
+	 *
+	 * @param array $fields
+	 *
+	 * @return $this
+	 */
+	public function hide(array $fields)
+	{
+		$this->withoutFields = $fields;
 
-    /**
-     * Remove the filtered keys.
-     *
-     * @param $array
-     *
-     * @return array
-     */
-    protected function filterFields($array)
-    {
-        return collect($array)->forget($this->withoutFields)->toArray();
-    }
+		return $this;
+	}
+
+	/**
+	 * Remove the filtered keys.
+	 *
+	 * @param $array
+	 *
+	 * @return array
+	 */
+	protected function filterFields($array)
+	{
+		return collect($array)->forget($this->withoutFields)->toArray();
+	}
 }
