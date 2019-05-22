@@ -43,9 +43,9 @@ abstract class Controller extends BaseController
      *
      * @return mixed
      */
-    public function failed($message, $code = Response::HTTP_BAD_REQUEST, $status = false)
+    public function failed($message, $data = [],$code = Response::HTTP_BAD_REQUEST, $status = false)
     {
-        return new Response(['status' => $status, 'code' => $code, 'message' => $message]
+        return new Response(['status' => $status, 'code' => $code, 'message' => $message,'data' => empty($data) ? null : $data]
         );
     }
 
