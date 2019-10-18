@@ -23,7 +23,7 @@ class Factory
      *
      * @return \EasyWeChat\Kernel\ServiceContainer
      */
-    public static function make($name, $config)
+    public static function make($name, $config = 'default')
     {
         if (is_string($config)) {
             $snakeName = strtolower(Str::snake($name));
