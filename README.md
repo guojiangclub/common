@@ -52,7 +52,9 @@ $app = Factory::officialAccount('ec'); //use ec project config
 
 #### 获取微信 js config
 
-待完成
+支持通过微信开放平台和直接获取 JSSDK，请通过 `config('ibrand.platform.enabled_jssdk')` 配置项来决定采用哪种方式。
+
+详见 `src/Controllers/WechatController.php` 代码。
 
 
 ### 第三方平台
