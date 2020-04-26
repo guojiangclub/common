@@ -55,8 +55,31 @@ $app = Factory::officialAccount('ec'); //use ec project config
 待完成
 
 
-### 微信第三方平台
+### 第三方平台
 
-待完成
+目前在微信的体系中，经常会涉及到第三方平台，比如：
+
+- 公众号授权第三方平台提供服务。
+- 小程序托管发布。果酱团队虽然不怎么接外包，但是也有不少客户，那么通过授权后统一托管发布很更简单一点。
+
+果酱也提供了官方的第三方平台源码：[laravel-wechat-platform](https://github.com/guojiangclub/laravel-wechat-platform)
 
 
+### 帮助函数
+
+`helpers.php` 文件里是目前常用的一些辅助函数，后续会陆续增加。这里只简单罗列下清单：
+
+- `platform_application()` :   实例化第三方平台应用对象。
+- `is_mobile` : 手机判断。
+- `is_mail`：邮箱判断。
+- `is_username`：用户名判断。
+- `get_wechat_config`：获取微信配置信息
+- `collect_to_array`：把 Laravel 的 collection 集合转化成数组，常用语 json 数据返回前转化一下。
+
+## API Resource 封装
+
+这个模块主要核心实现如下功能：
+
+- 兼容 Dingo/api ，因为历史原因，在返回前端数据上，需要和 dingo/api 保持一致。在果酱的所有系列产品中，无论是 dingo/api 还是 API Resource 返回的数据结构一定是一致的。
+- 实现了 API Resource 返回数据时隐藏字段功能，在 Model 中通过 `$withoutFields` 字段指定即可。
+- `iBrand\Common\Controllers\Controller` 封装常见的 API 返回方法。
