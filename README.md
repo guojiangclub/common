@@ -76,7 +76,7 @@ $app = Factory::officialAccount('ec'); //use ec project config
 - `get_wechat_config`：获取微信配置信息
 - `collect_to_array`：把 Laravel 的 collection 集合转化成数组，常用语 json 数据返回前转化一下。
 
-## API Resource 封装
+### API Resource 封装
 
 这个模块主要核心实现如下功能：
 
