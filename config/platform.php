@@ -11,5 +11,5 @@ return [
     /*
      * 是否通过第三方平台调用JSSDK
      */
-    'enabled_jssdk' => false
+    'enabled_jssdk' => false,
 ];
