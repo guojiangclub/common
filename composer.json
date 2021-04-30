@@ -17,8 +17,7 @@
 	"require": {
 		"php": ">=7.0",
 		"overtrue/http": "~1.0",
-		"barryvdh/laravel-cors": "^1.0",
-		"laravel/framework": "~8.0"
+		"barryvdh/laravel-cors": "^1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~8.0",
