@@ -11,10 +11,10 @@
 
 namespace iBrand\Common\Resources;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\AbstractPaginator;
 
-class BaseResource extends Resource
+class BaseResource extends JsonResource
 {
 	/**
 	 * @var array
