@@ -85,3 +85,29 @@ $app = Factory::officialAccount('ec'); //use ec project config
 - 兼容 Dingo/api ，因为历史原因，在返回前端数据上，需要和 dingo/api 保持一致。在果酱的所有系列产品中，无论是 dingo/api 还是 API Resource 返回的数据结构一定是一致的。
 - 实现了 API Resource 返回数据时隐藏字段功能，在 Model 中通过 `$withoutFields` 字段指定即可。
 - `iBrand\Common\Controllers\Controller` 封装常见的 API 返回方法。
+
+## 果酱云社区
+
+<p align="center">
+  <a href="https://guojiang.club/" target="_blank">
+    <img src="https://cdn.guojiang.club/image/2022/02/16/wu_1fs0jbco2182g280l1vagm7be6.png" alt="点击跳转"/>
+  </a>
+</p>
+
+
+
+- 全网真正免费的IT课程平台
+
+- 专注于综合IT技术的在线课程，致力于打造优质、高效的IT在线教育平台
+
+- 课程方向包含Python、Java、前端、大数据、数据分析、人工智能等热门IT课程
+
+- 300+免费课程任你选择
+
+
+
+<p align="center">
+  <a href="https://guojiang.club/" target="_blank">
+    <img src="https://cdn.guojiang.club/image/2022/02/16/wu_1fs0l82ae1pq11e431j6n17js1vq76.png" alt="点击跳转"/>
+  </a>
+</p>
